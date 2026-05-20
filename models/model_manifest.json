@@ -1,0 +1,7 @@
+{
+  "selected_model_family": "markov_transformer_subset",
+  "selected_artifact": "eurusd36m_hard_20260213_211208_hybrid.pt",
+  "source_winner": "02_eurusd_36m_hard_ultra_precision",
+  "transfer_mode": "conceptual_port_with_markov_proxy",
+  "notes": "Direct EURUSD tensor inference on Polymarket orderbook features is feature-incompatible; this artifact is retained as the canonical source checkpoint for future supervised distillation/retraining."
+}

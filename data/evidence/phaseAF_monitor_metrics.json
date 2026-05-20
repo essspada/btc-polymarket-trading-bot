@@ -1,0 +1,27 @@
+{
+  "config_sha256": "4abc533c98e1908175164da61c7a6d534abaab9b1157fc8faa8f9a2562c181cf",
+  "contamination_rows": 0,
+  "days_after_freeze": 6.621834799861111,
+  "filled_trades": 0,
+  "freeze_cutoff_utc": "2026-04-29T02:03:44.305357+00:00",
+  "frozen_config_sha256": "4abc533c98e1908175164da61c7a6d534abaab9b1157fc8faa8f9a2562c181cf",
+  "latest_prediction_ts_utc": "2026-05-05T16:59:10.832065+00:00",
+  "leakage_clean": true,
+  "leakage_rows": 0,
+  "missing_prediction_ts_rows": 0,
+  "no_retune": true,
+  "paper_days": 0,
+  "paper_hours": 0,
+  "prediction_rows": 1378,
+  "resolved_prediction_rows": 1378,
+  "run_dir": "data/sample (350-row excerpt of this 1386-row monitor run)",
+  "runtime_applied_rows": 0,
+  "shadow_trade_candidates": 572,
+  "source": "monitor_only_ag_shadow",
+  "volatility_regime_count": 3,
+  "volatility_regimes": [
+    "high",
+    "low",
+    "medium"
+  ]
+}

@@ -1,0 +1,7 @@
+# Dev-only tooling. CI installs this file, which includes runtime deps.
+-r requirements.txt
+pytest>=8.0
+ruff>=0.6
+mypy>=1.11
+types-PyYAML>=6.0
+types-requests>=2.31

@@ -1,0 +1,13 @@
+{
+  "ts_utc": "2026-05-05T18:21:20.825129+00:00",
+  "mode": "MONITOR_5M",
+  "runtime_minutes": 9617.591,
+  "predictions_total": 1386,
+  "predictions_correct": 1098,
+  "accuracy": 0.7922077922077922,
+  "pending_count": 0,
+  "deferred_timing_count": 0,
+  "resolved_count": 1386,
+  "pending": [],
+  "deferred_timing": []
+}

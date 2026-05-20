@@ -1,0 +1,94 @@
+{
+  "blockers": [
+    {
+      "actual": 6.621834799861111,
+      "code": "days_after_freeze_below_min",
+      "detail": "days_after_freeze below required minimum",
+      "required": 7,
+      "severity": "collect_more",
+      "tier": "paper_smoke"
+    },
+    {
+      "actual": 1378.0,
+      "code": "resolved_prediction_rows_below_min",
+      "detail": "resolved_prediction_rows below required minimum",
+      "required": 1500,
+      "severity": "collect_more",
+      "tier": "paper_smoke"
+    },
+    {
+      "code": "missing_remove_best_trade_pnl",
+      "detail": "remove_best_trade_pnl is unavailable",
+      "required": "> 0.0",
+      "severity": "collect_more",
+      "tier": "stress"
+    },
+    {
+      "code": "missing_fee_slippage_10pct_pnl",
+      "detail": "fee_slippage_10pct_pnl is unavailable",
+      "required": "> 0.0",
+      "severity": "collect_more",
+      "tier": "stress"
+    },
+    {
+      "code": "missing_loser_first_max_drawdown_pct",
+      "detail": "loser_first_max_drawdown_pct is unavailable",
+      "required": "<= 0.25",
+      "severity": "collect_more",
+      "tier": "stress"
+    },
+    {
+      "code": "missing_without_top_positive_quintile_pnl",
+      "detail": "without_top_positive_quintile_pnl is unavailable",
+      "required": 0.0,
+      "severity": "collect_more",
+      "tier": "stress"
+    }
+  ],
+  "business_target_pass": false,
+  "classification": "research_only_collect_more",
+  "generated_at_utc": "2026-05-05T17:11:15.396092+00:00",
+  "live_allowed": false,
+  "metrics": {
+    "config_sha256": "4abc533c98e1908175164da61c7a6d534abaab9b1157fc8faa8f9a2562c181cf",
+    "contamination_rows": 0,
+    "days_after_freeze": 6.621834799861111,
+    "filled_trades": 0,
+    "freeze_cutoff_utc": "2026-04-29T02:03:44.305357+00:00",
+    "frozen_config_sha256": "4abc533c98e1908175164da61c7a6d534abaab9b1157fc8faa8f9a2562c181cf",
+    "latest_prediction_ts_utc": "2026-05-05T16:59:10.832065+00:00",
+    "leakage_clean": true,
+    "leakage_rows": 0,
+    "missing_prediction_ts_rows": 0,
+    "no_retune": true,
+    "paper_days": 0,
+    "paper_hours": 0,
+    "prediction_rows": 1378,
+    "resolved_prediction_rows": 1378,
+    "run_dir": "data/sample (350-row excerpt of this 1386-row monitor run)",
+    "runtime_applied_rows": 0,
+    "shadow_trade_candidates": 572,
+    "source": "monitor_only_ag_shadow",
+    "volatility_regime_count": 3,
+    "volatility_regimes": [
+      "high",
+      "low",
+      "medium"
+    ]
+  },
+  "monitor_only_allowed": true,
+  "paper_or_live_allowed": false,
+  "paper_safety_pass": false,
+  "paper_smoke_allowed": false,
+  "paper_trial_allowed": false,
+  "schema": "phaseAF_forward_evidence_gate_v1",
+  "stress_pass": false,
+  "validation_role": "hard_forward_release_gate_not_strategy_search",
+  "verdict": {
+    "live_allowed": false,
+    "next_action": "collect no-retune unseen rows; no paper/live promotion",
+    "paper_or_live_allowed": false,
+    "reason": "fixed no-retune forward gate with separate safety and business target tiers",
+    "status": "collect_more"
+  }
+}

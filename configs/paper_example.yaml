@@ -1,0 +1,305 @@
+app:
+  name: btc_polymarket_bot
+  mode: monitor-5m
+  seed: 42
+
+polymarket:
+  gamma_base_url: https://gamma-api.polymarket.com
+  clob_base_url: https://clob.polymarket.com
+  ws_market_url: wss://ws-subscriptions-clob.polymarket.com/ws/market
+  search_query: "Bitcoin Up or Down"
+  target_series_slug: "btc-up-or-down-5m"
+  fallback_series_slugs:
+    - "btc-up-or-down-15m"
+    - "btc-up-or-down-hourly"
+  lookahead_windows: 12
+
+discovery:
+  require_accepting_orders: true
+  include_closed: false
+  require_chainlink_for_5m: true
+  max_results: 50
+
+monitor:
+  poll_seconds: 10
+  lookback_windows: 1
+  lookahead_windows: 12
+  min_start_delay_seconds: 120
+  max_start_delay_seconds: 210
+  settlement_grace_seconds: 45
+  resolution_winner_threshold: 0.99
+  max_runtime_minutes: 0
+  predictions_file: predictions_5m.jsonl
+  outcomes_file: outcomes_5m.jsonl
+  state_file: monitor_5m_state.json
+  timing_events_file: monitor_timing_events_5m.jsonl
+  adaptive_risk_shadow_file: monitor_adaptive_risk_shadow_decisions_5m.jsonl
+
+execution:
+  live_trading: false
+  require_confirm_live: true
+  live_order_state_file: live_order_state.json
+  maker_preference: true
+  lock_side_to_prediction: true
+  allowed_order_types:
+    - maker
+  min_edge_to_trade: 0.004
+  min_edge_for_taker: 0.009
+  sizing_mode: edge_scaled
+  # Safer live-paper default: skip high-price entries with negligible upside.
+  # Research configs can still set this back to 0.0 explicitly.
+  min_reward_to_risk_ratio: 0.1
+  # Optional economics-aware decision gates (legacy behavior unchanged when null).
+  min_expected_roi_cash: null
+  min_breakeven_margin: null
+  actionability_calibration:
+    enabled: false
+    artifact_path: null
+    min_bucket_samples: 20
+    fallback_policy: conservative_shrink
+    conservative_alpha: 0.7
+    min_calibrated_net_edge: null
+    min_breakeven_margin: null
+  maker_fill_probability: 0.65
+  maker_fill_floor: 0.05
+  maker_fill_cap: 0.9
+  maker_fill_base: 0.78
+  maker_fill_spread_penalty: 7.0
+  maker_fill_late_penalty_90: 0.15
+  maker_fill_late_penalty_45: 0.10
+  maker_ev_advantage_required: 0.0005
+  confirmation_gate:
+    enabled: false
+    candidate_key: proxy_logistic_market_blend
+    min_edge: 0.03
+    require_same_side: true
+    max_spread: 0.02
+    min_price: 0.05
+    max_price: 0.95
+  slippage_bps_taker: 12
+  slippage_bps_maker: 3
+  latency_buffer_seconds: 20
+
+fees:
+  maker_fee_bps: 0
+  taker_fee_bps: 1000
+  maker_fee_rate: 0.0
+  taker_fee_rate: 0.072
+  curve_rate: 0.25
+  curve_exponent: 2.0
+  min_fee: 0.0001
+
+risk:
+  max_exposure_per_window_usd: 150
+  max_balance_fraction_per_trade: 0.12
+  sizing_cap:
+    enabled: false
+    max_trade_usd: null
+    min_trade_usd_after_cap: null
+    max_fraction_of_base_exposure: null
+  x3_resolver:
+    enabled: false
+    mode: shadow
+    policy: cap_large_cash12
+    large_cash_threshold_usd: 16.0
+    large_cash_cap_usd: 12.0
+    mid_price_min: 0.55
+    mid_price_max: 0.75
+    mid_price_cap_usd: null
+    up_cap_usd: null
+    down_cap_usd: null
+    global_cap_usd: null
+    hard_max_cash_usd: null
+    min_trade_usd_after_cap: 5.0
+    respect_advisor_cap: false
+    respect_advisor_veto: false
+  adaptive_risk:
+    enabled: true
+    mode: shadow
+    drawdown_soft_pct: 0.05
+    drawdown_hard_pct: 0.15
+    daily_loss_soft_frac: 0.06
+    daily_loss_lock_frac: 0.12
+    loss_streak_cooldown: 2
+    loss_streak_long_cooldown: 3
+    cooldown_windows: 1
+    long_cooldown_windows: 3
+    min_multiplier: 0.35
+    veto_negative_economics: true
+    min_expected_roi_cash: 0.0
+    min_breakeven_margin: 0.0
+    max_candidate_fraction_of_equity: 0.12
+    high_volatility_bps: 20.0
+    extreme_volatility_bps: 35.0
+    high_volatility_multiplier: 0.65
+    wide_spread_norm: 0.06
+    extreme_spread_norm: 0.10
+    wide_spread_multiplier: 0.65
+    low_confidence_threshold: 0.58
+    low_confidence_multiplier: 0.75
+    min_trade_usd_after_cap: 0.0
+    monitor_shadow_equity_usd: 100.0
+  reduced_risk_timezone: Europe/Warsaw
+  reduced_risk_start_local: "00:00"
+  reduced_risk_end_local: "05:30"
+  reduced_risk_exposure_multiplier: 0.6
+  max_daily_loss_usd: 300
+  cooldown_after_loss_streak: 3
+  cooldown_windows: 3
+  max_open_positions: 3
+  drift_enabled: true
+  drift_lookback: 60
+  drift_min_samples: 40
+  drift_min_accuracy: 0.46
+  drift_cooldown_windows: 6
+
+book_quality:
+  sentinel_bid: 0.01
+  sentinel_ask: 0.99
+  max_spread: 0.08
+  max_midpoint_sum_deviation: 0.05
+  min_midpoint: 0.02
+  max_midpoint: 0.98
+
+oracle:
+  enabled: false
+  symbol: BTCUSDT
+  oracle_price_url: null
+  timeout_seconds: 10
+
+spot_context:
+  enabled: true
+  symbol: BTCUSDT
+  timeout_seconds: 10
+  kline_limit: 8
+  cache_ttl_seconds: 5
+
+model:
+  # Default runtime is the already-tested safer path. The 180s policy remains
+  # available for research and rollback.
+  source: log240_only
+  fallback_to_proxy_orderbook: true
+  name: markov_proxy_port
+  source_model_path: models/eurusd36m_hard_20260213_211208_hybrid.pt
+  source_model_note: "Ported strategy baseline: winner 02_eurusd_36m_hard_ultra_precision (concept transfer, not direct feature-compatible inference)."
+  calibration: platt
+  default_confidence: 0.5
+  spot_window_path:
+    min_sigma_bps: 4.0
+    drift_weight: 0.25
+    prob_shrink: 0.85
+    spot_model_weight: 0.45
+  spot_logistic:
+    lookback: 240
+    min_train_samples: 40
+    min_class_samples: 10
+    seed_rows_file: outputs/archive_2026-03-11/native_archive_dataset_spot.jsonl
+  spot_logistic_market_blend:
+    logistic_weight: 0.2
+  spot_consensus_blend:
+    path_weight: 0.5
+    logistic_weight: 0.5
+  proxy_logistic_market_blend:
+    proxy_weight: 0.1
+    logistic_weight: 0.2
+  proxy_logistic_meta_policy:
+    proxy_midpoint_band: 0.06
+    proxy_edge_margin: 0.0
+    fallback_source: spot_logistic_online
+  timing_policy_runtime:
+    allow_late_fresh_start: false
+    late_start_grace_seconds: 10
+  timing_policy_base_sources:
+    cons180_then_log240: spot_consensus_blend
+    log240_only: spot_consensus_blend
+    log180_then_log240: spot_consensus_blend
+    path180_then_path240: spot_consensus_blend
+  timing_policies:
+    cons180_then_log240:
+      - delay_seconds: 180
+        candidate: spot_consensus_blend
+        extra_edge: 0.10
+      - delay_seconds: 240
+        candidate: spot_logistic_online
+        extra_edge: 0.0
+    log240_only:
+      - delay_seconds: 240
+        candidate: spot_logistic_online
+        extra_edge: 0.0
+    log180_then_log240:
+      - delay_seconds: 180
+        candidate: spot_logistic_online
+        extra_edge: 0.10
+      - delay_seconds: 240
+        candidate: spot_logistic_online
+        extra_edge: 0.0
+    path180_then_path240:
+      - delay_seconds: 180
+        candidate: spot_window_path
+        extra_edge: 0.10
+      - delay_seconds: 240
+        candidate: spot_window_path
+        extra_edge: 0.0
+  adaptive_blend:
+    lookback_resolved: 120
+    min_samples: 20
+    default_model_weight: 0.35
+    min_model_weight: 0.1
+    max_model_weight: 0.9
+    calibration_strength: 0.7
+    max_calibration_shift: 0.15
+    platt_lookback: 240
+    platt_min_samples: 40
+    platt_min_class_samples: 8
+  transferred_markov:
+    # External PyTorch sequence-prediction model published as a separate research
+    # project. Disabled by default for the open-source build: configure paths and
+    # set enabled=true to wire it in as a shadow source.
+    enabled: false
+    python_bin: ""
+    project_root: ""
+    predictor_module: src.models.predict_sequence
+    model_config_path: ""
+    model_weights_path: ""
+    output_dir: outputs/markov_bridge
+    symbol: BTCUSDT
+    interval: 5m
+    candles_limit: 14000
+    request_limit: 1000
+    request_timeout_seconds: 20
+    request_pause_seconds: 0.1
+    predict_timeout_seconds: 120
+    hold_weight: 0.0
+    max_prediction_age_minutes: 45
+    min_refresh_seconds: 30
+
+paths:
+  logs_dir: logs
+  outputs_dir: outputs
+  reports_dir: reports
+
+paper:
+  initial_balance_usd: 100.0
+  max_runtime_minutes: 0
+  predictions_file: paper_predictions_5m.jsonl
+  outcomes_file: paper_outcomes_5m.jsonl
+  trades_file: paper_trades_5m.jsonl
+  x3_shadow_file: paper_x3_shadow_decisions_5m.jsonl
+  adaptive_risk_shadow_file: paper_adaptive_risk_shadow_decisions_5m.jsonl
+  state_file: paper_5m_state.json
+  timing_events_file: paper_timing_events_5m.jsonl
+
+backtest:
+  live_like:
+    use_normalized_entry_prices: true
+    max_raw_entry_sum_deviation: 0.02
+  walkforward:
+    source_outcomes_file: paper_outcomes_5m.jsonl
+    lookback: 240
+    min_train_samples: 40
+    allowed_order_types:
+      - maker
+    require_book_quality: true
+    max_outcome_spread: 0.25
+    min_edge_to_trade: 0.004
+    min_edge_for_taker: 0.009

@@ -1,0 +1,51 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = [
+    "data",
+    "models",
+    "outputs",
+    "logs",
+    "reports",
+    "sandbox",
+    ".venv",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "B",
+    "SIM",
+    "UP",
+]
+ignore = [
+    "E501",   # long URLs and report strings are common in research scripts
+    "B904",   # explicit exception chaining is useful, but too noisy for the legacy scripts
+    "SIM108", # ternaries are not always more readable in risk logic
+    "SIM117", # combined context managers can reduce clarity in tests
+]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = ["E402"] # scripts add the repo root to sys.path before importing src
+
+[tool.mypy]
+python_version = "3.12"
+files = [
+    "src/config",
+    "src/polymarket/book_quality.py",
+    "src/polymarket/fees.py",
+    "src/polymarket/orderbook.py",
+    "src/strategy/sizing.py",
+    "src/strategy/x3_resolver.py",
+    "src/utils/config.py",
+]
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+show_error_codes = true
+pretty = true

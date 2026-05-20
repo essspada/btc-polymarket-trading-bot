@@ -1,0 +1,21 @@
+{
+  "config_path": "data/sample (350-row excerpt of this 1386-row monitor run)/monitor_only_ag_config.yaml",
+  "config_sha256": "4abc533c98e1908175164da61c7a6d534abaab9b1157fc8faa8f9a2562c181cf",
+  "created_at_utc": "2026-04-29T02:03:44.305357+00:00",
+  "expected_files": {
+    "adaptive_risk_shadow": "data/sample (350-row excerpt of this 1386-row monitor run)/monitor_adaptive_risk_shadow_decisions_5m.jsonl",
+    "log": "data/sample (350-row excerpt of this 1386-row monitor run)/logs/btc_polymarket_bot_monitor.log",
+    "outcomes": "data/sample (350-row excerpt of this 1386-row monitor run)/outcomes_5m.jsonl",
+    "predictions": "data/sample (350-row excerpt of this 1386-row monitor run)/predictions_5m.jsonl",
+    "state": "data/sample (350-row excerpt of this 1386-row monitor run)/monitor_5m_state.json",
+    "timing_events": "data/sample (350-row excerpt of this 1386-row monitor run)/monitor_timing_events_5m.jsonl"
+  },
+  "freeze_manifest": "data/sample (350-row excerpt of this 1386-row monitor run)/freeze_manifest.json",
+  "git_commit": "b6dd043bbba21a36ba12e39cc198ed695d6b3248",
+  "live_trading": false,
+  "mode": "monitor-5m",
+  "paper_mode_allowed": false,
+  "run_dir": "data/sample (350-row excerpt of this 1386-row monitor run)",
+  "run_tag": "recovery_ag_monitor_20260429_020344",
+  "schema": "recovery_ag_monitor_launch_context_v1"
+}

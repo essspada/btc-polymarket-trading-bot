@@ -1,0 +1,17 @@
+{
+  "base_config": "configs/default.yaml",
+  "config_path": "data/sample (350-row excerpt of this 1386-row monitor run)/monitor_only_ag_config.yaml",
+  "config_sha256": "4abc533c98e1908175164da61c7a6d534abaab9b1157fc8faa8f9a2562c181cf",
+  "created_at_utc": "2026-04-29T02:03:44.305357+00:00",
+  "freeze_cutoff_utc": "2026-04-29T02:03:44.305357+00:00",
+  "git_commit": "b6dd043bbba21a36ba12e39cc198ed695d6b3248",
+  "live_trading": false,
+  "mode": "monitor-5m",
+  "no_retune_rule": "Do not change AG thresholds or gate thresholds after inspecting collected rows; changing config requires a new run/freeze.",
+  "paper_mode_allowed": false,
+  "paper_or_live_allowed": false,
+  "run_dir": "data/sample (350-row excerpt of this 1386-row monitor run)",
+  "run_tag": "recovery_ag_monitor_20260429_020344",
+  "schema": "recovery_ag_monitor_freeze_manifest_v1",
+  "thresholds_locked": true
+}
