@@ -160,6 +160,11 @@ trading system. Its documented conclusion is that the strategy **loses money**.
 It is published for its methodology, its architecture, and its honest negative
 result. Do not trade real capital with it.
 
+## Related
+
+- [polymarket-latency-study](https://github.com/essspada/polymarket-latency-study) - companion feasibility note on why a BTC 5-minute latency edge is not worth
+  building against the same market structure.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
